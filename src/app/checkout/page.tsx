@@ -52,7 +52,7 @@ export default function CheckoutPage() {
       }));
 
       const totalPrice = getTotalPrice();
-      const customerName = userData?.name || user.displayName || user.email || 'Customer';
+      const customerName = userData?.name || user?.displayName || user?.email || 'Customer';
       await createOrder(orderProducts, totalPrice, paymentMethod, customerName, shippingAddress);
       await clearCart();
       alert('Order placed successfully!');

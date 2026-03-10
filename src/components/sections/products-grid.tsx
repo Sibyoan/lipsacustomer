@@ -10,7 +10,10 @@ interface ProductsGridProps {
 }
 
 export default function ProductsGrid({ category, title = "Products", limit = 12 }: ProductsGridProps) {
-  const { products, loading, error } = useProducts(category, limit);
+  const { products, loading, error } = useProducts({ 
+    categoryFilter: category, 
+    limitCount: limit 
+  });
 
   if (loading) {
     return (

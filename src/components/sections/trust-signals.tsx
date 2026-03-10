@@ -77,11 +77,11 @@ const TrustSignals = () => {
   ];
 
   const marketplaceLogos = [
-    { name: 'Amazon', src: 'https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/ad25a274-b170-471c-8f10-3e1fdc8ca29e-deodap-in/assets/svgs/amazon_logo.svg' || '/placeholders/amazon.svg', width: 86, height: 28 },
+    { name: 'Amazon', src: 'https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/ad25a274-b170-471c-8f10-3e1fdc8ca29e-deodap-in/assets/svgs/amazon_logo.svg', width: 86, height: 28 },
     { name: 'Flipkart', src: 'https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/ad25a274-b170-471c-8f10-3e1fdc8ca29e-deodap-in/assets/svgs/flipkart_1-10.svg', width: 88, height: 24 },
-    { name: 'Meesho', src: 'https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/ad25a274-b170-471c-8f10-3e1fdc8ca29e-deodap-in/assets/svgs/meesho_logo.svg' || '/placeholders/meesho.svg', width: 88, height: 24 },
-    { name: 'TradeIndia', src: 'https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/ad25a274-b170-471c-8f10-3e1fdc8ca29e-deodap-in/assets/svgs/tradeindia_logo.svg' || '/placeholders/tradeindia.svg', width: 88, height: 24 },
-    { name: 'IndiaMart', src: 'https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/ad25a274-b170-471c-8f10-3e1fdc8ca29e-deodap-in/assets/svgs/indiamart_logo.svg' || '/placeholders/indiamart.svg', width: 88, height: 24 },
+    { name: 'Meesho', src: 'https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/ad25a274-b170-471c-8f10-3e1fdc8ca29e-deodap-in/assets/svgs/meesho_logo.svg', width: 88, height: 24 },
+    { name: 'TradeIndia', src: 'https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/ad25a274-b170-471c-8f10-3e1fdc8ca29e-deodap-in/assets/svgs/tradeindia_logo.svg', width: 88, height: 24 },
+    { name: 'IndiaMart', src: 'https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/ad25a274-b170-471c-8f10-3e1fdc8ca29e-deodap-in/assets/svgs/indiamart_logo.svg', width: 88, height: 24 },
     { name: 'JustDial', src: 'https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/ad25a274-b170-471c-8f10-3e1fdc8ca29e-deodap-in/assets/svgs/justdial-seeklogo_1-13.svg', width: 88, height: 24 }
   ];
 
