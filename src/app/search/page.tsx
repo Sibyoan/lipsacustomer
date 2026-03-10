@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import UtilityBar from '@/components/sections/utility-bar';
@@ -9,7 +9,7 @@ import Footer from '@/components/sections/footer';
 import ProductCard from '@/components/ProductCard';
 import { useSearch } from '@/hooks/useSearch';
 
-export default function SearchPage() {
+function SearchContent() {
   const searchParams = useSearchParams();
   const query = searchParams.get('q') || '';
   const { results, loading, search } = useSearch();
@@ -49,7 +49,7 @@ export default function SearchPage() {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Search products..."
-                className="flex-grow px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-[#d72323]"
+                className="grow px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-[#d72323]"
               />
               <button
                 type="submit"
@@ -92,5 +92,24 @@ export default function SearchPage() {
       </main>
       <Footer />
     </div>
+  );
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex flex-col min-h-screen bg-white">
+        <UtilityBar />
+        <Header />
+        <main className="grow">
+          <div className="max-w-7xl mx-auto px-4 py-8">
+            <div className="text-center py-12">Loading...</div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    }>
+      <SearchContent />
+    </Suspense>
   );
 }
