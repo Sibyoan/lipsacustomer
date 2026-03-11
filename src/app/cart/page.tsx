@@ -18,7 +18,7 @@ export default function CartPage() {
       <div className="flex flex-col min-h-screen bg-white">
         <UtilityBar />
         <Header />
-        <main className="flex-grow bg-gray-50 py-12">
+        <main className="grow bg-gray-50 py-12">
           <div className="max-w-4xl mx-auto px-4 text-center">
             <h1 className="text-2xl font-bold mb-4">Please login to view your cart</h1>
             <Link href="/account/login" className="text-[#d72323] hover:underline">
@@ -36,7 +36,7 @@ export default function CartPage() {
       <div className="flex flex-col min-h-screen bg-white">
         <UtilityBar />
         <Header />
-        <main className="flex-grow flex items-center justify-center">
+        <main className="grow flex items-center justify-center">
           <div>Loading cart...</div>
         </main>
         <Footer />
@@ -48,7 +48,7 @@ export default function CartPage() {
     <div className="flex flex-col min-h-screen bg-white">
       <UtilityBar />
       <Header />
-      <main className="flex-grow bg-gray-50 py-12">
+      <main className="grow bg-gray-50 py-12">
         <div className="max-w-6xl mx-auto px-4">
           <h1 className="text-3xl font-bold text-[#0b1726] mb-8">Shopping Cart</h1>
 
@@ -70,7 +70,7 @@ export default function CartPage() {
                         alt={item.name}
                         className="w-24 h-24 object-cover rounded"
                       />
-                      <div className="flex-grow">
+                      <div className="grow">
                         <h3 className="font-semibold text-lg mb-2">{item.name}</h3>
                         <p className="text-[#d72323] font-bold mb-2">₹{item.price}</p>
                         <div className="flex items-center gap-3">

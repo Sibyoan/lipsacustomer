@@ -13,15 +13,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyBjaSfVpgSpOG5ZnaRUawafzpH6mxHzQhU",
-  authDomain: "lipsa-aec23.firebaseapp.com",
-  projectId: "lipsa-aec23",
-  storageBucket: "lipsa-aec23.firebasestorage.app",
-  messagingSenderId: "15009459385",
-  appId: "1:15009459385:web:76fea985b4d0ae26e6bf68",
-  measurementId: "G-ZXNV16PDF4"
-};
+const { firebaseConfig } = require('./firebase-config');
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

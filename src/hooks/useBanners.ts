@@ -46,12 +46,24 @@ export function useBanners() {
             return null;
           }
           
+          // Validate and sanitize the link
+          let validLink = data.link || '/';
+          
+          // Check if link is invalid and provide a better default
+          if (!validLink || 
+              validLink.trim() === '' || 
+              validLink.includes('cloudinary.com') || 
+              validLink.includes('heeeeee') ||
+              (!validLink.startsWith('/') && !validLink.startsWith('http'))) {
+            validLink = '/'; // Default to home page
+          }
+          
           return {
             id: doc.id,
             title: data.title || 'Banner',
             image: imageUrl,
             mobileImage: data.mobileImage || data.mobileImageUrl || null,
-            link: data.link || '/',
+            link: validLink,
             createdAt: data.createdAt?.toDate() || new Date(),
             position: data.position || 0
           };

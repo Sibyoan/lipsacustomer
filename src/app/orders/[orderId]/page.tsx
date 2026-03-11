@@ -83,7 +83,7 @@ export default function OrderDetailsPage() {
     if (!order) return null;
     
     const existingReturn = returns.find(
-      returnReq => returnReq.orderId === order.id && returnReq.productId === productId
+      (returnReq) => returnReq.orderId === order.id && returnReq.productId === productId
     );
     
     return existingReturn;
@@ -99,7 +99,10 @@ export default function OrderDetailsPage() {
         <UtilityBar />
         <Header />
         <main className="grow flex items-center justify-center">
-          <div>Loading order details...</div>
+          <div className="text-center">
+            <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-[#d72323] border-r-transparent"></div>
+            <p className="mt-4 text-gray-600">Loading order details...</p>
+          </div>
         </main>
         <Footer />
       </div>
@@ -114,6 +117,7 @@ export default function OrderDetailsPage() {
         <main className="grow bg-gray-50 py-12">
           <div className="max-w-4xl mx-auto px-4 text-center">
             <h1 className="text-2xl font-bold mb-4">Order not found</h1>
+            <p className="text-gray-600 mb-6">The order you're looking for doesn't exist or you don't have permission to view it.</p>
             <Link href="/orders" className="text-[#d72323] hover:underline">
               Back to Orders
             </Link>
@@ -149,31 +153,48 @@ export default function OrderDetailsPage() {
               <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
                 <h2 className="text-xl font-bold mb-4">Order Items</h2>
                 <div className="space-y-4">
-                  {order.products.map((item) => (
-                    <div key={item.productId} className="flex gap-4 p-4 border rounded">
-                      <img 
-                        src={item.product?.image || item.image} 
-                        alt={item.product?.name || item.name}
-                        className="w-20 h-20 object-cover rounded"
-                      />
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-lg">{item.product?.name || item.name}</h3>
-                        <p className="text-gray-600">Category: {item.product?.category || 'General'}</p>
-                        <p className="text-gray-600">Quantity: {item.quantity}</p>
-                        <p className="font-bold text-[#d72323]">₹{item.product?.price || item.price}</p>
-                      </div>
-                      {canReturn && (
-                        <div className="flex items-center">
-                          <button
-                            onClick={() => handleReturnRequest(item.productId)}
-                            className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 transition-colors"
-                          >
-                            Return Product
-                          </button>
+                  {order.products.map((item, index) => {
+                    const returnStatus = getProductReturnStatus(item.productId);
+                    
+                    return (
+                      <div key={`${item.productId}-${index}`} className="flex gap-4 p-4 border rounded">
+                        <img 
+                          src={item.product?.image || item.image || '/placeholder-product.jpg'} 
+                          alt={item.product?.name || item.name}
+                          className="w-20 h-20 object-cover rounded"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.src = '/placeholder-product.jpg';
+                          }}
+                        />
+                        <div className="flex-1">
+                          <h3 className="font-semibold text-lg">{item.product?.name || item.name}</h3>
+                          <p className="text-gray-600">Category: {item.product?.category || 'General'}</p>
+                          <p className="text-gray-600">Quantity: {item.quantity}</p>
+                          <p className="font-bold text-[#d72323]">₹{item.product?.price || item.price}</p>
+                          <p className="text-sm text-gray-500">Subtotal: ₹{(item.product?.price || item.price) * item.quantity}</p>
                         </div>
-                      )}
-                    </div>
-                  ))}
+                        <div className="flex flex-col items-end gap-2">
+                          {returnStatus ? (
+                            <div className={`px-3 py-1 rounded text-sm ${
+                              returnStatus.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                              returnStatus.status === 'approved' ? 'bg-green-100 text-green-800' :
+                              'bg-red-100 text-red-800'
+                            }`}>
+                              Return {returnStatus.status}
+                            </div>
+                          ) : canReturn ? (
+                            <button
+                              onClick={() => handleReturnRequest(item.productId)}
+                              className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 transition-colors text-sm"
+                            >
+                              Return Product
+                            </button>
+                          ) : null}
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -182,6 +203,7 @@ export default function OrderDetailsPage() {
                 <div className="bg-white rounded-lg shadow-lg p-6">
                   <h2 className="text-xl font-bold mb-4">Shipping Address</h2>
                   <div className="text-gray-700">
+                    <p className="font-medium">{order.customerName || 'Customer'}</p>
                     <p>{order.shippingAddress.street}</p>
                     <p>{order.shippingAddress.city}, {order.shippingAddress.state}</p>
                     <p>{order.shippingAddress.zipCode}</p>
@@ -199,11 +221,11 @@ export default function OrderDetailsPage() {
                 <div className="space-y-3 mb-4">
                   <div className="flex justify-between">
                     <span>Order Date:</span>
-                    <span>{new Date(order.createdAt).toLocaleDateString('en-IN', {
+                    <span>{order.createdAt ? new Date(order.createdAt).toLocaleDateString('en-IN', {
                       year: 'numeric',
                       month: 'long',
                       day: 'numeric'
-                    })}</span>
+                    }) : 'Date not available'}</span>
                   </div>
                   
                   <div className="flex justify-between">
@@ -234,6 +256,11 @@ export default function OrderDetailsPage() {
                     <span>Payment Method:</span>
                     <span>{order.paymentMethod || 'COD'}</span>
                   </div>
+
+                  <div className="flex justify-between">
+                    <span>Items:</span>
+                    <span>{order.products.reduce((sum, item) => sum + item.quantity, 0)}</span>
+                  </div>
                 </div>
 
                 <div className="border-t pt-4">
@@ -241,6 +268,24 @@ export default function OrderDetailsPage() {
                     <span>Total Amount:</span>
                     <span className="text-[#d72323]">₹{order.totalPrice || order.totalAmount}</span>
                   </div>
+                </div>
+
+                {/* Order Actions */}
+                <div className="mt-6 space-y-2">
+                  <button
+                    onClick={() => window.print()}
+                    className="w-full bg-gray-100 text-gray-700 py-2 rounded hover:bg-gray-200 transition-colors"
+                  >
+                    Print Order
+                  </button>
+                  {order.customerEmail && (
+                    <a
+                      href={`mailto:support@example.com?subject=Order ${order.id.slice(0, 8).toUpperCase()}&body=I need help with my order ${order.id}`}
+                      className="w-full bg-blue-100 text-blue-700 py-2 rounded hover:bg-blue-200 transition-colors text-center block"
+                    >
+                      Contact Support
+                    </a>
+                  )}
                 </div>
               </div>
             </div>
@@ -250,7 +295,7 @@ export default function OrderDetailsPage() {
 
       {/* Return Modal */}
       {showReturnModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
             <h3 className="text-xl font-bold mb-4">Return Product</h3>
             <div className="mb-4">
@@ -258,7 +303,7 @@ export default function OrderDetailsPage() {
               <textarea
                 value={returnReason}
                 onChange={(e) => setReturnReason(e.target.value)}
-                className="w-full border border-gray-300 rounded px-3 py-2"
+                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#d72323] focus:border-transparent"
                 rows={4}
                 placeholder="Please explain why you want to return this product..."
                 required
@@ -268,7 +313,7 @@ export default function OrderDetailsPage() {
               <button
                 onClick={submitReturnRequest}
                 disabled={!returnReason.trim()}
-                className="flex-1 bg-[#d72323] text-white py-2 rounded hover:bg-[#b81e1e] disabled:opacity-50"
+                className="flex-1 bg-[#d72323] text-white py-2 rounded hover:bg-[#b81e1e] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 Submit Return Request
               </button>
@@ -278,7 +323,7 @@ export default function OrderDetailsPage() {
                   setReturnReason('');
                   setReturningProductId('');
                 }}
-                className="flex-1 border border-gray-300 py-2 rounded hover:bg-gray-50"
+                className="flex-1 border border-gray-300 py-2 rounded hover:bg-gray-50 transition-colors"
               >
                 Cancel
               </button>

@@ -1,9 +1,6 @@
 import type { NextConfig } from "next";
 import path from "node:path";
 
-// Loader path from orchids-visual-edits - use direct resolve to get the actual file
-const loaderPath = require.resolve('orchids-visual-edits/loader.js');
-
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
@@ -17,20 +14,34 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  outputFileTracingRoot: path.resolve(__dirname, '../../'),
+  outputFileTracingRoot: path.resolve(process.cwd(), '../../'),
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false, // Changed to false to catch TypeScript errors
   },
   eslint: {
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: false, // Changed to false to catch ESLint errors
   },
+  // Turbopack configuration
   turbopack: {
     rules: {
-      "*.{jsx,tsx}": {
-        loaders: [loaderPath]
-      }
-    }
-  }
+      '*.{jsx,tsx}': {
+        loaders: ['orchids-visual-edits/loader.js'],
+      },
+    },
+  },
+  // Keep webpack config as fallback for production builds
+  webpack: (config) => {
+    // Add orchids-visual-edits loader for JSX/TSX files
+    config.module.rules.push({
+      test: /\.(jsx|tsx)$/,
+      use: [
+        {
+          loader: 'orchids-visual-edits/loader.js',
+        },
+      ],
+    });
+    return config;
+  },
 } as NextConfig;
 
 export default nextConfig;

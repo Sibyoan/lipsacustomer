@@ -50,10 +50,10 @@ export default function Header() {
   ];
 
   return (
-    <header className="w-full bg-white sticky top-0 z-[9997]">
+    <header className="w-full bg-white sticky top-0 z-9997">
       {/* Top Bar */}
       <div className="border-b border-gray-200">
-        <div className="max-w-[1200px] mx-auto px-4 py-3">
+        <div className="max-w-6xl mx-auto px-4 py-3">
           <div className="flex items-center justify-between gap-4">
             {/* Logo */}
             <div className="flex items-center gap-2">
@@ -86,7 +86,7 @@ export default function Header() {
               </button>
               
               {/* User Account */}
-              <div className="relative z-[10000]" ref={userMenuRef}>
+              <div className="relative z-10000" ref={userMenuRef}>
                 {user ? (
                   <>
                     <button 
@@ -98,7 +98,7 @@ export default function Header() {
                       <ChevronDown className={`w-4 h-4 transition-transform ${showUserMenu ? 'rotate-180' : ''}`} />
                     </button>
                     {showUserMenu && (
-                      <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl py-2 border border-gray-200 z-[10000]">
+                      <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl py-2 border border-gray-200 z-10000">
                         {/* User Info Header */}
                         <div className="px-4 py-3 border-b border-gray-200">
                           <p className="text-sm font-semibold text-gray-900 truncate">{userData?.name}</p>
@@ -164,7 +164,7 @@ export default function Header() {
       {/* Navigation Menu */}
       <nav className="bg-[#0b1726] hidden lg:block relative">
         <div className="overflow-x-auto scrollbar-hide scroll-smooth">
-          <div className="max-w-[1200px] mx-auto px-12">
+          <div className="max-w-6xl mx-auto px-12">
             <ul className="flex items-center justify-center min-w-max">
               {navItems.map((item, index) => (
                 <li key={index} className="relative">

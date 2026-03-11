@@ -11,7 +11,7 @@ export default function NotFound() {
       <UtilityBar />
       <Header />
       <main className="grow flex items-center justify-center">
-        <div className="max-w-300 mx-auto px-4 py-16 text-center">
+        <div className="max-w-md mx-auto px-4 py-16 text-center">
           <div className="mb-8">
             <h1 className="text-9xl font-black text-[#d72323] mb-4">404</h1>
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Page Not Found</h2>

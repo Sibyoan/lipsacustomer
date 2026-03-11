@@ -35,7 +35,7 @@ export default function LoginPage() {
     <div className="flex flex-col min-h-screen bg-white">
       <UtilityBar />
       <Header />
-      <main className="flex-grow bg-gray-50 py-12">
+      <main className="grow bg-gray-50 py-12">
         <div className="max-w-md mx-auto px-4">
           <div className="bg-white rounded-lg shadow-lg p-8">
             <h1 className="text-[28px] font-bold text-[#0b1726] mb-2 text-center">Welcome Back</h1>

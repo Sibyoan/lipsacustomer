@@ -92,7 +92,7 @@ export default function ProductDetailsPage() {
       <div className="flex flex-col min-h-screen bg-white">
         <UtilityBar />
         <Header />
-        <main className="flex-grow flex items-center justify-center">
+        <main className="grow flex items-center justify-center">
           <div className="text-center">Loading...</div>
         </main>
         <Footer />
@@ -105,7 +105,7 @@ export default function ProductDetailsPage() {
       <div className="flex flex-col min-h-screen bg-white">
         <UtilityBar />
         <Header />
-        <main className="flex-grow flex items-center justify-center">
+        <main className="grow flex items-center justify-center">
           <div className="text-center">Product not found</div>
         </main>
         <Footer />
@@ -119,7 +119,7 @@ export default function ProductDetailsPage() {
     <div className="flex flex-col min-h-screen bg-white">
       <UtilityBar />
       <Header />
-      <main className="flex-grow bg-gray-50 py-8">
+      <main className="grow bg-gray-50 py-8">
         <div className="max-w-7xl mx-auto px-4">
           <div className="bg-white rounded-lg shadow-lg p-8">
             <div className="grid md:grid-cols-2 gap-8">

@@ -80,7 +80,7 @@ export default function HeroSlider() {
   if (loading) {
     return (
       <section className="relative bg-gray-100 overflow-hidden">
-        <div className="max-w-[1200px] mx-auto px-3 pt-3 pb-2">
+        <div className="max-w-6xl mx-auto px-3 pt-3 pb-2">
           <div className="relative overflow-hidden rounded-lg bg-gray-200 animate-pulse" style={{ aspectRatio: '16/5', minHeight: '200px', maxHeight: '420px' }}>
             <div className="flex items-center justify-center h-full">
               <p className="text-gray-400">Loading banners...</p>
@@ -95,7 +95,7 @@ export default function HeroSlider() {
   if (slides.length === 0) {
     return (
       <section className="relative bg-gray-100 overflow-hidden">
-        <div className="max-w-[1200px] mx-auto px-3 pt-3 pb-2">
+        <div className="max-w-6xl mx-auto px-3 pt-3 pb-2">
           <div className="relative overflow-hidden rounded-lg bg-gradient-to-r from-blue-500 to-purple-600" style={{ aspectRatio: '16/5', minHeight: '200px', maxHeight: '420px' }}>
             <div className="flex items-center justify-center h-full text-white">
               <div className="text-center">
@@ -111,7 +111,7 @@ export default function HeroSlider() {
 
   return (
     <section className="relative bg-gray-100 overflow-hidden">
-      <div className="max-w-[1200px] mx-auto px-3 pt-3 pb-2">
+      <div className="max-w-6xl mx-auto px-3 pt-3 pb-2">
         <div className="relative overflow-hidden rounded-lg group">
           {/* Slides */}
           <div
@@ -120,8 +120,29 @@ export default function HeroSlider() {
           >
             {slides.map((slide, i) => {
               const fallback = fallbackSlides[i % fallbackSlides.length];
+              
+              // Check if the link is valid
+              const isValidLink = slide.link && 
+                                 slide.link !== '/' && 
+                                 !slide.link.includes('cloudinary.com') && 
+                                 !slide.link.includes('heeeeee') &&
+                                 (slide.link.startsWith('/') || slide.link.startsWith('http'));
+              
+              const handleClick = (e: React.MouseEvent) => {
+                if (!isValidLink) {
+                  e.preventDefault();
+                  // Optional: Show a toast or message that banner is for display only
+                  console.log('Banner is for display only - no navigation link configured');
+                }
+              };
+              
               return (
-                <a key={slide.id} href={slide.link} className="w-full shrink-0 block relative">
+                <a 
+                  key={slide.id} 
+                  href={isValidLink ? slide.link : '#'} 
+                  className={`w-full shrink-0 block relative ${!isValidLink ? 'cursor-default' : ''}`}
+                  onClick={handleClick}
+                >
                   {!imageErrors[i] && slide.desktop && slide.mobile ? (
                     <>
                       {/* Desktop */}
